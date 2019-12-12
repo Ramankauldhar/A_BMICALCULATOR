@@ -8,36 +8,70 @@
 
 import UIKit
 
-//initializing the variables
-private var heightt: Double = 0.0
-private var weight: Double = 0.0
-private var result: Double = 0.0
-
 class ViewController: UIViewController {
+    private var U_height: Double = 0.0
+    private var U_weight: Double = 0.0
+    private var U_result: Double = 0.0
     
-    //connecting the UIFields
-    @IBOutlet weak var Username: UITextField!
-    @IBOutlet weak var UserAge: UITextField!
-    @IBOutlet weak var UserGender: UITextField!
-    @IBOutlet weak var UserHeight: UITextField!
-    @IBOutlet weak var UserWeight: UITextField!
-    @IBOutlet weak var resultlabel: UILabel!
+    @IBOutlet weak var User_name: UITextField!
     
-    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var User_age: UITextField!
     
-    //saving the value
-    heightt = Double(UserHeight.text!) as! Double
-    weight = Double(UserWeight.text!) as! Double
-    result = (weight*703)/(height*height)
-    resultlabel.text = String(result)
+    @IBOutlet weak var User_Gender: UITextField!
+    
+    @IBOutlet weak var User_weight: UITextField!
+    
+    @IBOutlet weak var User_Height: UITextField!
+    
+    @IBOutlet weak var Calculateresult: UILabel!
+    
+    @IBOutlet weak var Message: UILabel!
+    
+    @IBAction func donebutton(_ sender: Any) {
+        U_height = Double(User_Height.text!) as! Double
+        U_weight = Double(User_weight.text!) as! Double
+        U_result = (U_weight*703)/(U_height*U_height)
+        Calculateresult.text = String (U_result)
+        
+        if(U_result < 16)
+        {
+            Message.text = String("Severe Thinness")
+        }
+        if(U_result >= 16 && U_result <= 17)
+        {
+            Message.text = String("Moderate Thiness")
+        }
+        if(U_result >= 17 && U_result <= 18.5 )
+        {
+             Message.text = String("Mild Thiness")
+        }
+        if(U_result >= 18.5 && U_result <= 25 )
+        {
+            Message.text = String("Normal")
+        }
+        if(U_result >= 25 && U_result <= 30 )
+        {
+            Message.text = String("OverWeight")
+        }
+        if(U_result >= 30 && U_result <= 35 )
+        {
+            Message.text = String("Obese class 1")
+        }
+        if(U_result >= 35 && U_result <= 40 )
+        {
+            Message.text = String("Obese class 2")
+        }
+        if(U_result > 40 )
+        {
+            Message.text = String("Obese class 3")
+        }
+    }
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-    
-
-
 }
 
