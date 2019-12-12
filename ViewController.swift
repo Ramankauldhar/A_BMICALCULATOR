@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         height = Double(User_Height.text!) as! Double
         weight = Double(User_Weight.text!) as! Double
         result = (weight*703)/(height*height)
-        ResultLabel.text = String(result)
+        ResultLabel.text = String(format:"%.2f",result)
     }
     
     
