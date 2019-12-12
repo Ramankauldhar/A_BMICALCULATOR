@@ -9,10 +9,12 @@
 import UIKit
 
 class ViewController: UIViewController {
+    //initializing variables
     private var U_height: Double = 0.0
     private var U_weight: Double = 0.0
     private var U_result: Double = 0.0
     
+    //connecting filed
     @IBOutlet weak var User_name: UITextField!
     
     @IBOutlet weak var User_age: UITextField!
@@ -23,10 +25,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var User_Height: UITextField!
     
+    //connecting labels
     @IBOutlet weak var Calculateresult: UILabel!
     
     @IBOutlet weak var Message: UILabel!
     
+    //perform action on done(Calculate button)
     @IBAction func donebutton(_ sender: Any) {
         U_height = Double(User_Height.text!) as! Double
         U_weight = Double(User_weight.text!) as! Double
