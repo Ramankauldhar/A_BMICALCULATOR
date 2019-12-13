@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
+    var american = false
+    var ref: DatabaseReference!
     
  private var height: Double = 0.0
  private var weight: Double = 0.0
@@ -28,11 +31,48 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var BMIMessageLabel: UILabel!
     
+       override func viewDidLoad() {
+           super.viewDidLoad()
+           // Do any additional setup after loading the view.
+          ref = Database.database().reference().child("People")
+    }
+    
+    
+    @IBAction func chaneLocation(_ sender: UISegmentedControl) {
+        print(sender.selectedSegmentIndex)
+        if(sender.selectedSegmentIndex == 0)
+        {
+            american = false
+        }
+        else{
+            american = true
+        }
+    }
+    
+    
     @IBAction func BMICalculateButton(_ sender: UIButton) {
+      
         height = Double(User_Height.text!) as! Double
         weight = Double(User_Weight.text!) as! Double
+        
+        if(american)
+        {
+            weight += 20
+        }
         result = (weight*703)/(height*height)
         ResultLabel.text = String(format:"%.2f",result)
+        
+        if (User_name.text != "") || (User_Age.text != "") || (User_Gender.text != "") || (User_Height.text != "") || (User_Weight.text != "") || (ResultLabel.text != "")
+            {
+                self.saveDetail()
+                User_name.text = ""
+                User_Age.text = ""
+                User_Gender.text = ""
+                User_Height.text = ""
+                User_Weight.text = ""
+               
+            }
+        
         
         if(result < 16)
         {
@@ -66,13 +106,16 @@ class ViewController: UIViewController {
         {
             BMIMessageLabel.text = String("Obese Class 3")
         }
+    
     }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+   func saveDetail() {
+       let key = ref.childByAutoId().key!
+       let details = ["name": User_name.text! as String,
+                      "age": User_Age.text! as String, "gender": User_Gender.text! as String, "height":User_Height.text! as String, "weight": User_Weight.text! as String, "BMI": ResultLabel.text!]
+       ref.child(key).setValue(details)
+       
+   }
 
 
 }
