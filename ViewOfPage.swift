@@ -1,10 +1,8 @@
-//
-//  ViewOfPage.swift
-//  BMIApp_iosTest
-//
-//  Created by setas on 2019-12-12.
-//  Copyright © 2019 centennialcollege.ca. All rights reserved.
-//
+//File name- ViewOfPage.swift
+//  Author name- Ramandeep
+// App Name- BMIApp_iosTest
+// Student ID- 301095150
+
 
 import UIKit
 

@@ -1,10 +1,8 @@
-//
-//  GetdetailsViewController.swift
-//  BMIApp_iosTest
-//
-//  Created by setas on 2019-12-12.
-//  Copyright © 2019 centennialcollege.ca. All rights reserved.
-//
+//File name- GetdetailsViewController.swift
+//  Author name- Ramandeep
+// App Name- BMIApp_iosTest
+// Student ID- 301095150
+
 
 import UIKit
 import FirebaseDatabase
@@ -37,14 +35,29 @@ class GetdetailsViewController: UIViewController, UITableViewDelegate,UITableVie
                 ref.observeSingleEvent(of: .value){
                 (snapshot) in
                 for child in snapshot.children.allObjects as! [DataSnapshot]{
-                let weight = child.key
+                    if let json = child.value as? [String:Any] {
+                        print(json)
+                        var BMI = ""
+                        if let BMIFirebase = json["BMI"] as? String {
+                            BMI = BMIFirebase
+                        }
+                        var weight = ""
+                        if let weightFirebase = json["weight"] as? String {
+                            weight = weightFirebase
+                        }
+                        self.DetailList.append(List(weight: weight, BMI: BMI))
+
+                    }
+                    self.TableVieww.reloadData()
+
+                /*let weight = child.key
                 let BMI = child.key
                 let detailref = ref.child(weight).child(BMI)
                 detailref.observeSingleEvent(of: .value, with: {(snapshot) in
                 let value = snapshot.value as? NSDictionary
                 self.DetailList.append(List(weight: weight, BMI: BMI))
-                self.TableVieww.reloadData()
-                })
+                    
+                })*/
             }}}
     
     func numberOfSections(in tableView: UITableView) -> Int {

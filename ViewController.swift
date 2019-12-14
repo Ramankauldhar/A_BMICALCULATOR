@@ -1,10 +1,8 @@
-//
-//  ViewController.swift
-//  BMIApp_iosTest
-//
-//  Created by setas on 2019-12-12.
-//  Copyright © 2019 centennialcollege.ca. All rights reserved.
-//
+//File name- ViewController.swift
+//  Author name- Ramandeep
+// App Name- BMIApp_iosTest
+// Student ID- 301095150
+
 
 import UIKit
 import Firebase
@@ -35,6 +33,7 @@ class ViewController: UIViewController {
            super.viewDidLoad()
            // Do any additional setup after loading the view.
           ref = Database.database().reference().child("People")
+        getUser()
     }
     
     
@@ -110,13 +109,89 @@ class ViewController: UIViewController {
     }
     
    func saveDetail() {
-       let key = ref.childByAutoId().key!
+    saveBMI()
+    saveUser()
+      /* let key = "User"//= ref.childByAutoId().key!
        let details = ["name": User_name.text! as String,
                       "age": User_Age.text! as String, "gender": User_Gender.text! as String, "height":User_Height.text! as String, "weight": User_Weight.text! as String, "BMI": ResultLabel.text!]
-       ref.child(key).setValue(details)
+       ref.child(key).setValue(details)*/
        
    }
+    func saveBMI(){
+        let BMI = ref.child("BMI")
+        let key =  BMI.childByAutoId().key!
+             let details = ["BMI":ResultLabel.text! as String,
+                            ]
+        BMI.childByAutoId().setValue(details)
+        //ref.child("BMI")setValue(details)
+    }
+    func getUser() {
+        
+        let other = Database.database().reference(withPath: "People")
 
+        other.observe(.value) { (snapshot) in
+            
+
+            if !snapshot.exists() { return }
+
+            let user = snapshot.childSnapshot(forPath: "User") // Its print all values including Snap (User)
+
+            print(snapshot.value!)
+            
+          //  let a = user.children
+
+
+         /*   if let json = user as? [String : Any] {
+                           if let name = json["name"] as? String {
+                               self.User_name.text = name
+                           }
+            }*/
+           
+           self.User_name.text = snapshot.value(forKeyPath: "User.name") as! String
+//
+//            self.User_Age.text = user.value(forKey: "age") as! String
+//            self.User_Gender.text = user.value(forKey: "gender") as! String
+//            self.User_Height.text = user.value(forKey: "height") as! String
+//            self.User_Weight.text = user.value(forKey: "weight") as! String
+
+            
+            
+
+          
+
+        }
+      
+        
+    }
+    
+    func saveUser(){
+        let key = "User"//= ref.childByAutoId().key!
+             let details = ["name": User_name.text! as String,
+                            "age": User_Age.text! as String,
+                            "gender": User_Gender.text! as String,
+                            "height":User_Height.text! as String,
+                            "weight": User_Weight.text! as String]
+             ref.child(key).setValue(details)
+    }
+
+    
+    
+    func getUserFromDatabase(){
+               
+           let ref = Database.database().reference(withPath: "People")
+                   
+        ref.observeSingleEvent(of: .value){
+                    
+                   (snapshot) in
+                    let user = snapshot.childSnapshot(forPath: "User")
+                    print(user.value(forKey: "age"))
+            
+
+               }
+    }
+       
+    
+    
 
 }
 
